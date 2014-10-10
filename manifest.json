@@ -8,11 +8,13 @@
   "background": {
     "persistent": false,
     "scripts": [
-      "scripts/iconActions.js"
+      "scripts/background.js"
     ]
   },
   "options_page":"screens/settings.html",
   "permissions": [
+    "tabs",
+    "storage"
   ],
   "browser_action": {
     "default_icon": "./images/icon.png",
