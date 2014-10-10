@@ -5,6 +5,12 @@
   "description": "Chrome extension for Tripmemore application",
   "version": "0.1",
 
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "scripts/iconActions.js"
+    ]
+  },
   "permissions": [
   ],
   "browser_action": {
