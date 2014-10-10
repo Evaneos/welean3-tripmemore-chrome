@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+
+  "name": "Tripmemore",
+  "description": "Chrome extension for Tripmemore application",
+  "version": "0.1",
+
+  "permissions": [
+  ],
+  "browser_action": {
+    "default_icon": "./images/icon.png",
+    "default_popup": "./screens/popup.html"
+  }
+}
