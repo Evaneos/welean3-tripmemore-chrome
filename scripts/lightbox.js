@@ -1,19 +1,25 @@
-chrome.extension.onMessage.addListener(
+chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
-		console.log('received !!!!!!!!');
-		if (request.action == "startLightbox") {
+
+		console.log('passage');
+
+		if (request.type == "startLightbox") {
+			if (document.getElementById('tripmemore_lightbox_background')) {
+				return ;
+			}
+
 			background = document.createElement('div');
-			background.id = "lightbox_background";
+			background.id = "tripmemore_lightbox_background";
 			lightbox = document.createElement('div');
-			lightbox.id = "lightbox";
-			lightbox.innerHTML = '<h1>Hello, world.</h1>';
+			lightbox.id = "tripmemore_lightbox";
+			lightbox.innerHTML = '<h1>Where should I pin it ?</h1><p><label for="tripmemore-localisation"><input type="text" id="tripmemore-localisation" name="tripmemore-localisation" placeholder="Enter a location" /><input id="tripmemore-localisation-send" type="submit" /></label></p>';
 
 			document.body.appendChild(background);
 
 			background.appendChild( lightbox );
 			
 			closeScriptureLightbox = function() {
-				var lb = document.getElementById('lightbox_background');
+				var lb = document.getElementById('tripmemore_lightbox_background');
 				lb.parentNode.removeChild( lb );
 			}
 
@@ -21,6 +27,18 @@ chrome.extension.onMessage.addListener(
 			button.onclick=closeScriptureLightbox;
 			button.textContent='Close';
 			lightbox.appendChild(button);
+
+			googleInitializer = document.createElement('script');
+			googleInitializer.type = 'text/javascript';
+			googleInitializer.innerHTML = 'function initialize () {var autocomplete = new google.maps.places.Autocomplete((document.getElementById(\'tripmemore-localisation\')));google.maps.event.addListener(autocomplete, \'place_changed\', function () {var place = autocomplete.getPlace();console.log ("plop", place);});}';
+			document.body.appendChild(googleInitializer);
+
+			googlePlace = document.createElement('script');
+			googlePlace.type = 'text/javascript';
+			googlePlace.src = 'http://maps.google.com/maps/api/js?libraries=places&sensor=false&callback=initialize';
+
+			document.body.appendChild(googlePlace);
+
 			sendResponse({farewell: "goodbye"});
 		}
 	}

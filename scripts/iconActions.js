@@ -1,8 +1,8 @@
 document.getElementById('tripmemore-pinpage').addEventListener('click', function (){
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 
-    	console.log('Calling');
-    	chrome.extension.sendMessage({type: "dom-loaded", data: tabs[0].url});
+		chrome.tabs.executeScript(tabs[0].id, {file:"scripts/lightbox.js"});
+		chrome.tabs.sendMessage(tabs[0].id, {type: "startLightbox"});
 
 
   //   	chrome.storage.sync.get('tripmemore', function (result) {
