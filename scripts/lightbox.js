@@ -34,7 +34,7 @@ chrome.runtime.onMessage.addListener(
 			// Adding google place callback
 			googleInitializer = document.createElement('script');
 			googleInitializer.type = 'text/javascript';
-			googleInitializer.innerHTML = 'function initialize () {	window.tripmemore_autocomplete = new google.maps.places.Autocomplete((document.getElementById("tripmemore-localisation")));	document.getElementById('tripmemore-localisation-send').addEventListener('click', function () {		var place = tripmemore_autocomplete.getPlace();		console.log(place);		var event = document.createEvent("Event");event.initEvent("tripmemore-localisation-selected");		document.dispatchEvent(event);	}, false);}';
+			googleInitializer.innerHTML = 'function initialize () {window.tripmemore_autocomplete = new google.maps.places.Autocomplete((document.getElementById("tripmemore-localisation")));document.getElementById("tripmemore-localisation-send").addEventListener("click", function () {var place = tripmemore_autocomplete.getPlace();var event = new CustomEvent("tripmemore-localisation-selected", {"detail" : {"place": place}});document.dispatchEvent(event);}, false);}';
 			document.body.appendChild(googleInitializer);
 
 			// Lazy loading google place script
@@ -50,11 +50,36 @@ chrome.runtime.onMessage.addListener(
 	}
 );
 
+var TripmemoreAPI = {
+	model: {
+		'default': 'default data'
+	},
+
+	// Used to add a pin
+	// Sended data will be made from TripmemoreAPI model attribute
+	pin: function (url, data) {
+		for (var i = 0; i < data.length; i++) {
+			var xhr = new XMLHttpRequest();
+
+			xhr.open("POST", url + "/api/pins", true);
+
+			xhr.onreadystatechange = function() {
+			  if (xhr.readyState == 4) {
+			    console.log('Pin created');
+			  } else {
+			  	console.log("well ... something's not right");
+			  }
+			}
+			xhr.send(JSON.stringify(data[i]));
+		}
+	}
+}
+
 // Will be called when a pin is added
-document.addEventListener("tripmemore-localisation-selected", function(data) {
+document.addEventListener("tripmemore-localisation-selected", function(e) {
 		chrome.storage.sync.get('tripmemore', function (result) {
 			if (result.tripmemore && result.tripmemore.api) {
-				TripmemoreAPI.pin(result.tripmemore.api);
+				TripmemoreAPI.pin(result.tripmemore.api, [{"origin": "url", "place": e.detail.place, "media": e.srcElement.URL}]);
 			}
 		});
 });

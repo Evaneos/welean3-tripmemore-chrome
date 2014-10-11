@@ -7,8 +7,11 @@ var TripmemoreAPI = {
 	// Used to add a pin
 	// Sended data will be made from TripmemoreAPI model attribute
 	pin: function (url, data) {
+		for (var i = 0; i < data.length; i++) {
+			console.log(data[i]);
+		}
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", url, true);
+		xhr.open("POST", url + "/pin", true);
 
 		//adding data
 		xhr.onreadystatechange = function() {
