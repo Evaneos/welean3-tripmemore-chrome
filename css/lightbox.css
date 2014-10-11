@@ -1,4 +1,4 @@
-#lightbox_background {
+#tripmemore_lightbox_background {
  
  background-color:rgba(200,200,200,0.5);
  width:100%;
@@ -10,7 +10,7 @@
  
 }
 
-#lightbox {
+#tripmemore_lightbox {
  
  position:fixed;
  top:0px;

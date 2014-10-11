@@ -6,12 +6,23 @@
   "version": "0.1",
 
   "background": {
-    "persistent": false,
+    "persistent": true,
     "scripts": [
       "scripts/background.js"
     ]
   },
   "options_page":"screens/settings.html",
+  "web_accessible_resources": [
+    "css/lightbox.css",
+    "css/popup.css",
+    "scripts/lightbox.js"
+  ],
+  "content_scripts": [
+     {
+        "matches":    ["http://*/*", "https://*/*"],
+        "css":        ["css/lightbox.css"]
+     }
+  ],
   "permissions": [
     "tabs",
     "storage",
