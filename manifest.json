@@ -20,7 +20,8 @@
   "content_scripts": [
      {
         "matches":    ["http://*/*", "https://*/*"],
-        "css":        ["css/lightbox.css"]
+        "css":        ["css/lightbox.css"],
+        "js":         ["scripts/lightbox.js"]
      }
   ],
   "permissions": [
