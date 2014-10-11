@@ -1,8 +1,5 @@
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
-
-		console.log('passage');
-
 		if (request.type == "startLightbox") {
 			if (document.getElementById('tripmemore_lightbox_background')) {
 				return ;
@@ -30,7 +27,7 @@ chrome.runtime.onMessage.addListener(
 
 			googleInitializer = document.createElement('script');
 			googleInitializer.type = 'text/javascript';
-			googleInitializer.innerHTML = 'function initialize () {var autocomplete = new google.maps.places.Autocomplete((document.getElementById(\'tripmemore-localisation\')));google.maps.event.addListener(autocomplete, \'place_changed\', function () {var place = autocomplete.getPlace();console.log ("plop", place);});}';
+			googleInitializer.innerHTML = 'function initialize () {var autocomplete = new google.maps.places.Autocomplete((document.getElementById(\'tripmemore-localisation\')));google.maps.event.addListener(autocomplete, \'place_changed\', function () {var place = autocomplete.getPlace();var event = document.createEvent(\'Event\');event.initEvent(\'tripmemore-localisation-selected\');document.dispatchEvent(event);});}';
 			document.body.appendChild(googleInitializer);
 
 			googlePlace = document.createElement('script');
@@ -43,3 +40,7 @@ chrome.runtime.onMessage.addListener(
 		}
 	}
 );
+
+document.addEventListener("tripmemore-localisation-selected", function(data) {
+    console.log(data);
+});
