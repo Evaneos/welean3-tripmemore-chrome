@@ -1,3 +1,5 @@
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-  });
+chrome.contextMenus.create({
+	"title": "Pin this !",
+	"contexts": ["page", "selection", "image", "link"],
+	"onclick" : clickHandler
+});

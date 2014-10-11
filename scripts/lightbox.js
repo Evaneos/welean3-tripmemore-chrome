@@ -66,9 +66,7 @@ var TripmemoreAPI = {
 
 			xhr.onreadystatechange = function() {
 			  if (xhr.readyState == 4) {
-			    console.log('Pin created');
-			  } else {
-			  	console.log("well ... something's not right");
+			    window.closeScriptureLightbox();
 			  }
 			}
 			xhr.send(JSON.stringify(data[i]));
@@ -80,7 +78,7 @@ var TripmemoreAPI = {
 document.addEventListener("tripmemore-localisation-selected", function(e) {
 		chrome.storage.sync.get('tripmemore', function (result) {
 			if (result.tripmemore && result.tripmemore.api) {
-				TripmemoreAPI.pin(result.tripmemore.api, [{"origin": "url", "place": e.detail.place, "media": e.srcElement.URL}]);
+				TripmemoreAPI.pin(result.tripmemore.api, [{"origin": e.srcElement.URL, "place": e.detail.place, "media": {"type": "page", "content": ""}}]);
 			}
 		});
 });
