@@ -4,8 +4,16 @@ var TripmemoreAPI = {
 		'default': 'default data'
 	},
 	pin: function (url, data) {
-		console.log(this.model);
-		console.log(data);
-		console.log(url);
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+
+		//adding data
+
+		xhr.onreadystatechange = function() {
+		  if (xhr.readyState == 4) {
+		    console.log('Pin created')
+		  }
+		}
+		xhr.send();
 	}
 }
