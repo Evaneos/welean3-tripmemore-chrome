@@ -62,6 +62,7 @@ var TripmemoreAPI = {
 			var xhr = new XMLHttpRequest();
 
 			xhr.open("POST", url + "/api/pins", true);
+			xhr.setRequestHeader("Content-Type","application/json");
 
 			xhr.onreadystatechange = function() {
 			  if (xhr.readyState == 4) {
